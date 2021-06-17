@@ -15,6 +15,6 @@ namespace DbWebApplication.Services
         int Insert(ProductModel product);
         int Delete(int Id);
         int Update(ProductModel product);
-
+        int Truncate();
     }
 }

@@ -93,5 +93,14 @@ namespace DbWebApplication.Controllers
                 return View("EditDenied");
             }
         }
+
+        public IActionResult Truncate()
+        {
+            ProductsDAO products = new ProductsDAO();
+
+            int result = products.Truncate();
+
+            return View("Index");
+        }
     }
 }

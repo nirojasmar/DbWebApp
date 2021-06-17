@@ -178,5 +178,28 @@ namespace DbWebApplication.Services
             }
             return result;
         }
+        
+        public int Truncate()
+        {
+            int result = 0;
+
+            String sqlStatement = "TRUNCATE TABLE dbo.Products";
+
+            using (SqlConnection connection = new SqlConnection(connectionString))
+            {
+                SqlCommand command = new SqlCommand(sqlStatement, connection);
+                try
+                {
+                    connection.Open();
+
+                    result = command.ExecuteNonQuery();
+                }
+                catch (Exception e)
+                {
+                    Console.WriteLine(e.Message);
+                }
+            }
+            return result;
+        }
     }
 }

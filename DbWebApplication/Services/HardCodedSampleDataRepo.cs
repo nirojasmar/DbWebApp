@@ -56,5 +56,10 @@ namespace DbWebApplication.Services
         {
             throw new NotImplementedException();
         }
+
+        public int Truncate()
+        {
+            throw new NotImplementedException();
+        }
     }
 }
