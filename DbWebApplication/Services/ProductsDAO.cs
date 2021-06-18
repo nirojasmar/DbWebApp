@@ -69,9 +69,9 @@ namespace DbWebApplication.Services
 
         public ProductModel GetProductById(int id)
         {
-            ProductModel product = new ProductModel();
+            ProductModel product = null;
 
-            String sqlStatement = "SELECT * FROM dbo.Products WHERE Id LIKE @id";
+            String sqlStatement = "SELECT * FROM dbo.Products WHERE Id = @id";
 
             using (SqlConnection connection = new SqlConnection(connectionString))
             {
@@ -82,6 +82,17 @@ namespace DbWebApplication.Services
                     connection.Open();
 
                     SqlDataReader reader = command.ExecuteReader();
+                    
+                    while (reader.Read())
+                    {
+                        product = new ProductModel
+                        {
+                            Id = (int)reader[0],
+                            Name = (string)reader[1],
+                            Price = (decimal)reader[2],
+                            Description = (string)reader[3]
+                        };
+                    }
 
                 }
                 catch (Exception e)
