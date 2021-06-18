@@ -1,9 +1,7 @@
 ﻿@model IEnumerable<DbWebApplication.Models.ProductModel>
 
-<p>
-    <a asp-action="Create">Create New</a>
-    <a asp-action="Truncate">Delete All</a>
-</p>
+<button type="button" class="btn btn-success"><a asp-action="Create">Create New</a></button>
+<button type="button" class="btn btn-warning"><a asp-action="Truncate">Delete All</a></button>
 
 <div class="container d-flex flex-wrap">
 
@@ -17,8 +15,9 @@
                 <img class="card-img-top" src="https://loremflickr.com/150/150/@firstWord?lock=@item.Id" alt="@item.Name">
                 <div class="card-body">
                     <h4 class="card-title">@Html.DisplayFor(m => item.Price)</h4>
-                    <p class="card-text">@item.Description</p>
-                    <a href="#" class="btn btn-primary">Go somewhere</a>
+                    <a href="/product/Details/@item.Id" class="btn btn-primary">Show Details</a>
+                    <a href="/product/Edit/@item.Id" class="btn btn-info">Edit</a>
+                    <a href="/product/Delete/@item.Id" class="btn btn-danger">Delete</a>
                 </div>
         </div>       
      }
