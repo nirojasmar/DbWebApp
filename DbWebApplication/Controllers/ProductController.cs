@@ -78,12 +78,28 @@ namespace DbWebApplication.Controllers
             return View("Edit" , product);
         }
 
+        public IActionResult EditReturnPartial(ProductModel product)
+        {
+            ProductsDAO products = new ProductsDAO();
+            products.Update(product);
+
+            return PartialView("_productCard", product);
+        }
+
         public IActionResult Details(int Id)
         {
             ProductsDAO products = new ProductsDAO();
             ProductModel product = products.GetProductById(Id);
 
             return View("Details", product);
+        }
+
+        public IActionResult DetailsJSON(int Id)
+        {
+            ProductsDAO products = new ProductsDAO();
+            ProductModel product = products.GetProductById(Id);
+
+            return Json(product);
         }
 
         public IActionResult ProcessEdit(ProductModel product)
