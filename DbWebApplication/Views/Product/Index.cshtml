@@ -5,20 +5,46 @@
 
 <div class="container d-flex flex-wrap">
 
-    @foreach(var item in Model)
-    {
-        var s = item.Name;
-        var firstWord = s.IndexOf(" ") > -1 ? s.Substring(0, s.IndexOf(" ")) : s;
+    @foreach (var item in Model)
+    {   
+        <div id="card-number-@item.Id">
+            <partial name="_productCard" model="item" />
+        </div>
+    }
+</div>
 
-        <div class="card border-info mb-3" style="width: 18rem;">
-                <div class="card-header">@item.Name</div>
-                <img class="card-img-top" src="https://loremflickr.com/150/150/@firstWord?lock=@item.Id" alt="@item.Name">
-                <div class="card-body">
-                    <h4 class="card-title">@Html.DisplayFor(m => item.Price)</h4>
-                    <a href="/product/Details/@item.Id" class="btn btn-primary">Show Details</a>
-                    <a href="/product/Edit/@item.Id" class="btn btn-info">Edit</a>
-                    <a href="/product/Delete/@item.Id" class="btn btn-danger">Delete</a>
+<div class="modal fade" id="editModal" tabindex="-1" aria-labelledby="ModalLabel" aria-hidden="true">
+    <div class="modal-dialog" role="document">
+        <div class="modal-content">
+            <div class="modal-header">
+                <h5 class="modal-title" id="ModalLabel">Modal title</h5>
+                <button type="button" class="btn-close" data-dismiss="modal" aria-label="Close">
+                    <span aria-hidden="true">&times;</span>
+                </button>
+            </div>
+            <div class="modal-body">
+                <input id="modal-input-id" hidden for="Id" />
+                <div class="form-group">
+                    <label for="Name" class="control-label">Name</label>
+                    <input id="modal-input-name" for="Name" class="form-control" />
+                    <span validation-for="Name" class="text-danger"></span>
                 </div>
-        </div>       
-     }
+                <div class="form-group">
+                    <label for="Price" class="control-label">Price</label>
+                    <input id="modal-input-price" for="Price" class="form-control" />
+                    <span validation-for="Price" class="text-danger"></span>
+                </div>
+                <div class="form-group">
+                    <label for="Description" class="control-label">Description</label>
+                    <input id="modal-input-description" for="Description" class="form-control" />
+                    <span validation-for="Description" class="text-danger"></span>
+                </div>
+            </div>
+
+            <div class="modal-footer">
+                <button id="save-button" type="button" class="btn btn-outline-primary" data-dismiss="modal">Save changes</button>
+                <button type="button" class="btn btn-outline-secondary" data-dismiss="modal">Close</button>
+            </div>
+        </div>
+    </div>
 </div>

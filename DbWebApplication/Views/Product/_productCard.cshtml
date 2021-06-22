@@ -1,0 +1,22 @@
+﻿@model DbWebApplication.Models.ProductModel
+
+@{ 
+    var s = Model.Name;
+    var firstWord = s.IndexOf(" ") > -1 ? s.Substring(0, s.IndexOf(" ")) : s;
+}
+
+
+<div class="card border-info mb-3" style="width: 18rem;">
+    <div class="card-header">@Model.Name</div>
+    <img class="card-img-top" src="https://loremflickr.com/150/150/@firstWord?lock=@Model.Id" alt="@Model.Name">
+    <div class="card-body">
+        <h4 class="card-text">@Html.DisplayFor(m => Model.Price)</h4>
+        <a href="/product/Details/@Model.Id" class="btn btn-primary">Show Details</a>
+        <a href="/product/Edit/@Model.Id" class="btn btn-info">Edit</a>
+        <a href="/product/Delete/@Model.Id" class="btn btn-danger">Delete</a>
+        <!-- Button trigger modal -->
+        <button value="@Model.Id" type="button" class="btn btn-info edit-product-button" data-toggle="modal" data-target="#editModal">
+            modal Edit
+        </button>
+    </div>
+</div>
