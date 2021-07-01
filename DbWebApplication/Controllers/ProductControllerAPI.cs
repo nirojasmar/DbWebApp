@@ -6,6 +6,7 @@ using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Threading.Tasks;
+using System.Web.Http.Description;
 
 namespace DbWebApplication.Controllers
 {
@@ -14,11 +15,16 @@ namespace DbWebApplication.Controllers
     public class ProductControllerAPI : ControllerBase
     {       
         [HttpGet]
-        public ActionResult <IEnumerable<ProductModel>> Index()
+        [ResponseType(typeof(List<ProductModelDTO>))]
+        public IEnumerable<ProductModelDTO> Index()
         {
             ProductsDAO products = new ProductsDAO();
 
-            return products.GetAllProducts();
+            List<ProductModel> productList = products.GetAllProducts();
+
+            IEnumerable<ProductModelDTO> productsDTO = from p in productList select new ProductModelDTO(p);
+
+            return productsDTO;
         }
 
         [HttpDelete("Delete/{Id}")]
@@ -32,7 +38,7 @@ namespace DbWebApplication.Controllers
         }
 
         [HttpPost("Create")]
-        //expecting a product in json in the body of request
+        //Expecting a product in json in the body of request
         public ActionResult <int> Create(ProductModel product)
         {
             ProductsDAO products = new ProductsDAO();
@@ -43,19 +49,29 @@ namespace DbWebApplication.Controllers
         }
     
         [HttpGet("searchresults/{searchTerm}")]
-        public ActionResult <IEnumerable<ProductModel>> searchResults(String searchTerm)
+        [ResponseType(typeof(List<ProductModelDTO>))]
+        public IEnumerable<ProductModelDTO> searchResults(String searchTerm)
         {
             ProductsDAO products = new ProductsDAO();
 
-            return products.SearchProducts(searchTerm);
+            List<ProductModel> productList = products.SearchProducts(searchTerm);
+
+            IEnumerable<ProductModelDTO> productsDTO = from p in productList select new ProductModelDTO(p);
+
+            return productsDTO;
         }
 
         [HttpGet("Details/{Id}")]
-        public ActionResult <ProductModel> Details(int Id)
+        public ActionResult <ProductModelDTO> Details(int Id)
         {
+
             ProductsDAO products = new ProductsDAO();
 
-            return products.GetProductById(Id);
+            ProductModel p = products.GetProductById(Id);
+
+            ProductModelDTO pDTO = new ProductModelDTO(p);
+
+            return pDTO;
         }
 
         [HttpPut("Edit")]
